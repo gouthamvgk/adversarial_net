@@ -119,13 +119,13 @@ def train_and_sample(gen, dis, dataset, sample_dataset, config, stage = 1, pre_g
                 print('Running KL loss: {}'.format(sum(kl)/len(kl)))
 
                 previous, current, _, _ = gen(embedding, imgen_noise)
-                save_image(real_image, current, epoch+1, os.path.join(save_path, stage, 'images'))
+                save_image(real_image, current, epoch+1, os.path.join(save_path, 'images'))
                 show = utils.make_grid(real_image[0:16])
                 image_show(show)
                 show = utils.make_grid(current[0:16])
                 image_show(show)
                 if previous is not None:
-                    save_image(None, previous, epoch+1, os.path.join(save_path, stage, 'images'))
+                    save_image(None, previous, epoch+1, os.path.join(save_path, 'images'))
 
         elapsed_time = time.time() - start
         print('Epoch {} completed in {:.0f}minutes {:.0f}seconds'.format(epoch+1, elapsed_time//60, elapsed_time%60))
@@ -134,9 +134,9 @@ def train_and_sample(gen, dis, dataset, sample_dataset, config, stage = 1, pre_g
         print('KL loss for this epoch: {}'.format(sum(kl)/len(kl)))
 
         if ((epoch+1) % save_every == 0):
-            save_model(gen, dis,optimizer_gen, optimizer_dis, epoch + 1, os.path.join(save_path, stage, 'model'), stage=stage)
+            save_model(gen, dis,optimizer_gen, optimizer_dis, epoch + 1, os.path.join(save_path, 'model'), stage=stage)
         if ((epoch+1) % sample_every == 0):
-            sampler(gen, sample_dataset, epoch+1, noise = imgen_noise, save_path = os.path.join(save_path, stage, 'images'))
+            sampler(gen, sample_dataset, epoch+1, noise = imgen_noise, save_path = os.path.join(save_path, 'images'))
 
 
-    save_model(gen, dis, optimizer_gen, optimizer_dis, params['epoch'], os.path.join(save_path, stage, 'model') , stage = stage)
+    save_model(gen, dis, optimizer_gen, optimizer_dis, params['epoch'], os.path.join(save_path, 'model') , stage = stage)
